@@ -1,10 +1,10 @@
-import { Button, Stack, TextField } from '@mui/material'
+import { Button, Stack, TextField, Typography } from '@mui/material'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React from 'react';
 import './register.css';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 function Register() {
@@ -40,7 +40,7 @@ function Register() {
     navigate('/login');
   }
   return (
-    <div>
+    <div className='regi'>
       <Formik initialValues={initialvalue} validationSchema={validationshema} onSubmit={onsubmit} validateOnMount >
       {formik =>{
         return(
@@ -77,6 +77,9 @@ function Register() {
             {err => <span style={{color:'red'}}>{err} </span>}
           </ErrorMessage>
           <Button variant='contained' type='submit' disabled={!formik.isValid} className='input' >Submit</Button>
+          <Typography style={{marginLeft:'160px'}}>
+            <NavLink to={'/login'}>Login</NavLink>
+          </Typography>
          </Stack>
          </Form>
         )

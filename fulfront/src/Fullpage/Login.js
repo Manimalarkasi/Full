@@ -1,9 +1,9 @@
-import { Stack, TextField,Button } from '@mui/material'
+import { Stack, TextField,Button ,Typography } from '@mui/material'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React from 'react';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,NavLink } from 'react-router-dom';
 
 
 function Login() {
@@ -21,8 +21,11 @@ function Login() {
         navigate('/home')
         try{
             const resp= await axios.post('http://localhost:8000/login',values);
-            console.log(resp.data);
+            // console.log(resp.data);
             console.log(values);
+            if(resp.data==="Success"){
+              navigate("/home")
+            }
            }catch(error){
              console.error('error is dedected',error);
            }  
@@ -35,11 +38,12 @@ function Login() {
         //       }
     }
   return (
-    <div>
+    <div className='regi'>
         <Formik initialValues={initialvalue} validationSchema={validationSchema} onSubmit={onsubmit} validateOnMount>
             {formik =>{
                 return(
                     <Form className='form'>
+                        <h2>Login</h2>
                         <Stack spacing={2} direction={'column'}>
                         <Field as={TextField} label='email' name='mail' required autoFocus className='input'/>
                         <ErrorMessage name='mail'>
@@ -50,7 +54,9 @@ function Login() {
                             {err => <span style={{color:'red'}}>{err}</span>}
                         </ErrorMessage>
                         <Button variant='contained' type='submit' disabled={!formik.isValid}  className='input' >Submit</Button>
-                        
+                        <Typography style={{marginLeft:'160px'}}>
+                          <NavLink to={'/'}>register</NavLink>
+                          </Typography>
                         </Stack>
                     </Form>
                 )

@@ -2,3 +2,11 @@
   text-align: center;
 } */
 
+.home{
+  border: 4px silid red;
+  background-image:url('C:\Users\SightSpectrum\Pictures\Saved Pictures/g9.jpg') ;
+  color :yellow;
+  height:700px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -41,23 +41,36 @@ app.post('/regi',async(req,res)=>{
     emplo.phoneno =req.body.phoneno
     // emplo.name =req.body.name
 
- 
-
     const doc = await emplo.save();
-
     console.log(doc);
     res.send('values are posted');
     // res.json(doc);
 
 
 });
+app.post('/login', async (req, res) => {
+  const { mail, password } = req.body;
+  Emplo.findOne({mail:mail})
+  .then(user=>{
+    if(user){
+      if(user.cpassword === password){
+        res.json('Success')
+      }else{
+        res.json("the password is incorrect")
+      }
+    }else{
+      res.json("no record exi")
+    }
+  
+  });
+})
 
 // app.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
+//     const { mail, password } = req.body;
   
 //     try {
 //       // Check if user exists
-//       let user = await Emplo.findOne({ email });
+//       let user = await Emplo.findOne({ mail,password });
 //       if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
   
 //       // Check password
@@ -76,20 +89,44 @@ app.post('/regi',async(req,res)=>{
 //     }
 //   });
 
-app.post('/login', async (req, res) => {
-  const {mail , password } = req.body;
+// app.post('/login', async (req, res) => {
+//       const { mail, password } = req.body;
+    
+//         // Check if user exists
+//         const user = await Emplo.findOne({ mail });
+//         if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
+    
+//         // Check password
+        
+//         if (await bcrypt.compare(password, user.password)) {
+//           const token = jwt.sign({ email: user.email }, JWT_SECRET, {
+//             expiresIn: "15m",
+//           });
+      
+//           if (res.status(201)) {
+//             return res.json({ status: "ok", data: token });
+//           } else {
+//             return res.json({ error: "error" });
+//           }
+//         }
+//         res.json({ status: "error", error: "InvAlid Password" });
+      
+//     });
 
-  try {
-    const user = await Emplo.findOne({ mail, password });
-    if (user) {
-      res.json({ success: true, message: 'Login successful' });
-    } else {
-      res.json({ success: false, message: 'Invalid credentials' });
-    }
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-});
+// app.post('/login', async (req, res) => {
+//   const {mail , password } = req.body;
+
+//   try {
+//     const user = await Emplo.findOne({ mail, password });
+//     if (user ===mail,password) {
+//       res.json({ success: true, message: 'Login successful' });
+//     } else {
+//       res.json({ success: false, message: 'Invalid credentials' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Internal server error' });
+//   }
+// });
 
 
 app.get('/demo',async(req,res)=>{
